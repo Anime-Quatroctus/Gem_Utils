@@ -7,7 +7,6 @@ import org.apache.logging.log4j.Logger;
 import dev.anime.gems.proxies.ServerProxy;
 import dev.anime.gems.registries.MessageRegistry;
 import dev.anime.gems.registries.TileEntityRegistry;
-import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;

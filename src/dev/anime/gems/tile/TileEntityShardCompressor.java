@@ -56,10 +56,8 @@ public class TileEntityShardCompressor extends TileEntityBase implements ITickab
 					currentItemProcessTime++;
 					fuelTimeRemaining--;
 					if (world.isRemote && !temp) {
-						if (asm.currentState().equals("moving")) {
-							asm.transition("default");
-							temp = true;
-						} else if (asm.currentState().equals("default")) asm.transition("moving");
+						if (asm.currentState().equals("default")) asm.transition("moving");
+						else move.apply(1);
 					}
 //					else if (world.isRemote) asm.transition("default");
 					if (currentItemProcessTime >= FINISH_PROCESS_TIME) {
@@ -127,7 +125,11 @@ public class TileEntityShardCompressor extends TileEntityBase implements ITickab
 	
 	@Override
 	public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
-		return capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY ? CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(items) : capability == CapabilityAnimation.ANIMATION_CAPABILITY ? CapabilityAnimation.ANIMATION_CAPABILITY.cast(asm) : super.getCapability(capability, facing);
+		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+			return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(items);
+		} else if (capability == CapabilityAnimation.ANIMATION_CAPABILITY) {
+			return CapabilityAnimation.ANIMATION_CAPABILITY.cast(asm);
+		} else return super.getCapability(capability, facing);
 	}
 	
 	@Override
