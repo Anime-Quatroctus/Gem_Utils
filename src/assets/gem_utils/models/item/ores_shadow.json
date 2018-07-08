@@ -1,0 +1,7 @@
+{
+	"parent": "gem_utils:block/overlay",
+	"textures": {
+		"all": "minecraft:blocks/stone",
+		"overlay": "gem_utils:blocks/ore_shadow"
+	}
+}

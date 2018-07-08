@@ -1,0 +1,42 @@
+{
+	"forge_marker": 1,
+	
+	"defaults": {
+		"model": "gem_utils:overlay",
+		"textures": {
+			"all": "minecraft:blocks/stone",
+			"particle": "minecraft:blocks/stone"
+		},
+		"uvlock": true
+	},
+	
+	"variants": {
+		"inventory":[{
+		
+		}],
+		"normal": [{
+		
+		}],
+		"type": {
+			"ruby": {
+				"textures": { "overlay": "gem_utils:blocks/ore_ruby" }
+			},
+			"sapphire": {
+				"textures": { "overlay": "gem_utils:blocks/ore_sapphire" }
+			},
+			"amethyst": {
+				"textures": { "overlay": "gem_utils:blocks/ore_amethyst" }
+			},
+			"amber": {
+				"textures": { "overlay": "gem_utils:blocks/ore_amber" }
+			},
+			"shadow": {
+				"textures": { "overlay": "gem_utils:blocks/ore_shadow" }
+			},
+			"angel": {
+				"textures": { "overlay": "gem_utils:blocks/ore_angel" }
+			}
+		}
+	}
+
+}

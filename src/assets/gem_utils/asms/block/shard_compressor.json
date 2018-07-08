@@ -1,0 +1,13 @@
+{
+	"parameters": { },
+	"clips": {
+		"default": "gem_utils:block/shard_compressor@default",
+		"moving": ["apply", "gem_utils:block/shard_compressor@moving", "#move"]
+	},
+	"states": ["default", "moving"],
+	"transitions": {
+		"default": "moving",
+		"moving": "default"
+	},
+	"start_state": "default"
+}

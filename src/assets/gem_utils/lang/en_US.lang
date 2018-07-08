@@ -1,0 +1,14 @@
+tile.gem_utils:ores_ruby.name=Ruby Ore
+tile.gem_utils:ores_sapphire.name=Sapphire Ore
+tile.gem_utils:ores_amethyst.name=Amethyst Ore
+tile.gem_utils:ores_amber.name=Amber Ore
+tile.gem_utils:ores_shadow.name=Shadow Ore
+tile.gem_utils:ores_angel.name=Angel Ore
+
+item.gem_utils:materials_ruby.name=Ruby
+item.gem_utils:materials_sapphire.name=Sapphire
+item.gem_utils:materials_amethyst.name=Amethyst
+item.gem_utils:materials_amber.name=Amber
+item.gem_utils:materials_shadow.name=Shadowy Shards
+item.gem_utils:materials_angel.name=Angelic Ingot
+item.gem_utils:materials_shadowy_gem.name=Shadowy Gem
