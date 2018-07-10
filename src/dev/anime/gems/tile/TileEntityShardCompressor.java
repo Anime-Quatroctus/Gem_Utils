@@ -3,9 +3,9 @@ package dev.anime.gems.tile;
 import com.google.common.collect.ImmutableMap;
 
 import dev.anime.gems.Main;
-import dev.anime.gems.blocks.BlockOres.OreType;
 import dev.anime.gems.init.ModItems;
 import dev.anime.gems.utils.IMetaModel;
+import dev.anime.gems.utils.ItemStackHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
@@ -52,7 +52,7 @@ public class TileEntityShardCompressor extends TileEntityBase implements ITickab
 	public void update() {
 			if (fuelTimeRemaining > 0 || canBurnFuel()) {
 				ItemStack input = items.getStackInSlot(1);
-				if (input.getItem() == ModItems.MATERIALS && input.getMetadata() == OreType.SHADOW.ordinal() && input.getCount() >= 4) {
+				if (ItemStackHelper.matches(input, ModItems.MATERIALS, 4) && input.getCount() >= 4) {
 					currentItemProcessTime++;
 					fuelTimeRemaining--;
 					if (world.isRemote && !temp) {
@@ -71,7 +71,7 @@ public class TileEntityShardCompressor extends TileEntityBase implements ITickab
 	}
 	
 	private boolean canBurnFuel() {
-		if (items.getStackInSlot(0) == ItemStack.EMPTY) return false;
+		if (items.getStackInSlot(0).isEmpty()) return false;
 		int burnTime = TileEntityFurnace.getItemBurnTime(items.getStackInSlot(0));
 		if (burnTime <= 0) return false;
 		fuelTimeRemaining += burnTime;
