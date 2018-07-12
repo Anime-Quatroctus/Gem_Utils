@@ -1,19 +1,15 @@
 package dev.anime.gems.blocks;
 
-import javax.annotation.Nonnull;
-
 import dev.anime.gems.Main;
 import dev.anime.gems.init.ModBlocks;
 import dev.anime.gems.tile.TileEntityShardCompressor;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
-import net.minecraft.block.state.BlockFaceShape;
-import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
@@ -29,7 +25,6 @@ public class BlockShardCompressor extends Block {
 		super(Material.IRON);
 		setRegistryName("shard_compressor");
 		setUnlocalizedName(getRegistryName().toString());
-		setDefaultState(getDefaultState().withProperty(Properties.StaticProperty, true));
 		ModBlocks.BLOCKS.add(this);
 	}
 
@@ -39,50 +34,45 @@ public class BlockShardCompressor extends Block {
 		return true;
 	}
 	
-	@Override
-	public boolean hasTileEntity(IBlockState state) {
-		return true;
-	}
-	
-	@Override
-	public TileEntity createTileEntity(World world, IBlockState state) {
-		return new TileEntityShardCompressor();
-	}
-	
-	@Override
-	public boolean isFullCube(IBlockState state) {
-		return false;
-	}
-	
-	@Override
-	public boolean isOpaqueCube(IBlockState state) {
-		return false;
-	}
-	
-	@Override
-	public BlockRenderLayer getBlockLayer() {
-		return BlockRenderLayer.CUTOUT_MIPPED;
-	}
-	
-	@Nonnull
-	@Override
-	public BlockFaceShape getBlockFaceShape(IBlockAccess world, IBlockState state, BlockPos pos, EnumFacing side) {
-		return BlockFaceShape.UNDEFINED;
-	}
-	
-	@Override
-	public int getMetaFromState(IBlockState state) {
-		return 0;
-	}
-	
-	@Override
-	public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
-		return state.withProperty(Properties.StaticProperty, true);
-	}
-	
-	@Override
-	protected BlockStateContainer createBlockState() {
-		return new ExtendedBlockState(this, new IProperty[] { Properties.StaticProperty }, new IUnlistedProperty[] { Properties.AnimationProperty }) ;
-	}
+    @Override
+    public ExtendedBlockState createBlockState() {
+        return new ExtendedBlockState(this, new IProperty[]{ Properties.StaticProperty }, new IUnlistedProperty[]{ Properties.AnimationProperty });
+    }
+
+    @Override
+    public boolean isOpaqueCube(IBlockState state) { return false; }
+
+    @Override
+    public boolean isFullCube(IBlockState state) { return false; }
+
+    @Override
+    public boolean hasTileEntity(IBlockState state) {
+        return true;
+    }
+
+    @Override
+    public IBlockState getActualState(IBlockState state, IBlockAccess world, BlockPos pos) {
+        return state.withProperty(Properties.StaticProperty, true);
+    }
+    
+    @Override
+    public EnumBlockRenderType getRenderType(IBlockState state) {
+    	return EnumBlockRenderType.MODEL;
+    }
+
+    @Override
+    public int getMetaFromState(IBlockState state) {
+        return 0;
+    }
+
+    @Override
+    public IBlockState getStateFromMeta(int meta) {
+        return getDefaultState();
+    }
+
+    @Override
+    public TileEntity createTileEntity(World world, IBlockState state) {
+        return new TileEntityShardCompressor();
+    }
 	
 }

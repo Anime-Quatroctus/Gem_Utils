@@ -1,13 +1,17 @@
 {
-	"parameters": { },
-	"clips": {
-		"default": "gem_utils:block/shard_compressor@default",
-		"moving": ["apply", "gem_utils:block/shard_compressor@moving", "#move"]
-	},
-	"states": ["default", "moving"],
-	"transitions": {
-		"default": "moving",
-		"moving": "default"
-	},
-	"start_state": "default"
+  "parameters": {
+	"world_to_cycle": [ "/", 2 ]
+  },
+  "clips": {
+  	"default": "gem_utils:block/compressor@default",
+    "moving": ["apply", "gem_utils:block/compressor@moving", "#move" ]
+  },
+  "states": [
+    "default", "moving"
+  ],
+  "transitions": {
+  	"default": "moving",
+  	"moving": "default"
+  },
+  "start_state": "default"
 }

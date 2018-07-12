@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableMap;
 
 import dev.anime.gems.Main;
 import dev.anime.gems.init.ModItems;
+import dev.anime.gems.network.SyncTEMessage;
 import dev.anime.gems.utils.IMetaModel;
 import dev.anime.gems.utils.ItemStackHelper;
 import net.minecraft.item.ItemStack;
@@ -14,12 +15,12 @@ import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.common.animation.TimeValues;
+import net.minecraftforge.common.animation.TimeValues.VariableValue;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.model.animation.CapabilityAnimation;
 import net.minecraftforge.common.model.animation.IAnimationStateMachine;
-import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -30,44 +31,52 @@ public class TileEntityShardCompressor extends TileEntityBase implements ITickab
 	private int fuelTimeRemaining, currentItemProcessTime;
 	
 	public static final int FINISH_PROCESS_TIME = 300;
-	private static final ResourceLocation LOCATION = new ResourceLocation(Main.MODID, "asms/block/shard_compressor.json");
 	
 	@SideOnly(Side.CLIENT)
-	private IAnimationStateMachine asm;
+	private final IAnimationStateMachine asm;
 	
 	@SideOnly(Side.CLIENT)
 	private TimeValues.VariableValue move;
 	
-	private boolean temp = false;
-	
 	public TileEntityShardCompressor() {
 		this.items = new ItemStackHandler(3);
-		if (FMLCommonHandler.instance().getSide() == Side.CLIENT) {
-			move = new TimeValues.VariableValue(0);
-			asm = ModelLoaderRegistry.loadASM(LOCATION, ImmutableMap.of("move", move));
-		}
+		move = new VariableValue(0);
+		asm = Main.PROXY.load(new ResourceLocation(Main.MODID, "asms/block/shard_compressor.json"), ImmutableMap.of("move", move));
 	}
 	
 	@Override
 	public void update() {
+		if (!world.isRemote) {
 			if (fuelTimeRemaining > 0 || canBurnFuel()) {
 				ItemStack input = items.getStackInSlot(1);
 				if (ItemStackHelper.matches(input, ModItems.MATERIALS, 4) && input.getCount() >= 4) {
 					currentItemProcessTime++;
 					fuelTimeRemaining--;
-					if (world.isRemote && !temp) {
-						if (asm.currentState().equals("default")) asm.transition("moving");
-						else move.apply(1);
-					}
-//					else if (world.isRemote) asm.transition("default");
 					if (currentItemProcessTime >= FINISH_PROCESS_TIME) {
 						items.extractItem(1, 4, false);
 						items.insertItem(2, new ItemStack(ModItems.MATERIALS, 1, ((IMetaModel) ModItems.MATERIALS).getMaxMeta()), false);
 						currentItemProcessTime = 0;
 					}
+					if (currentItemProcessTime == 200 || currentItemProcessTime == 225 || currentItemProcessTime == 250 || currentItemProcessTime == 275 || currentItemProcessTime == 300) Main.WRAPPER.sendToAllTracking(new SyncTEMessage(getPos(), getUpdateTag()), new TargetPoint(world.provider.getDimension(), pos.getX(), pos.getY(), pos.getZ(), 64));
 					markDirty();
 				}
 			}
+		} else {
+			if (asm.currentState().equals("moving")) {
+				currentItemProcessTime++;
+				move.setValue((currentItemProcessTime - 200) / 99F);
+			}
+			if (currentItemProcessTime >= 200) {
+				if (asm.currentState().equals("default")) {
+					asm.transition("moving");
+				}
+			}
+			if (currentItemProcessTime == 300 && asm.currentState().equals("moving")) {
+				asm.transition("default");
+				currentItemProcessTime = 0;
+				move.setValue(0);
+			}
+		}
 	}
 	
 	private boolean canBurnFuel() {

@@ -7,12 +7,13 @@ import dev.anime.gems.init.ModBlocks;
 import net.minecraft.block.Block;
 import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 @EventBusSubscriber
 public class BlockRegistry {
 	
-	@SubscribeEvent
+	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public static void registerBlocks(Register<Block> event) {
 		if (Main.DEBUG) Main.LOGGER.log(Level.INFO, "Gem Utilities Registering Blocks.");
 		ModBlocks.init();

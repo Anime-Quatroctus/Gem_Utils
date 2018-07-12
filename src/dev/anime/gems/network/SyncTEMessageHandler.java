@@ -1,7 +1,6 @@
 package dev.anime.gems.network;
 
 import dev.anime.gems.Main;
-import dev.anime.gems.tile.TileEntityOre;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -18,7 +17,6 @@ public class SyncTEMessageHandler implements IMessageHandler<SyncTEMessage, Sync
 			System.out.println("Message Received");
 			Minecraft.getMinecraft().addScheduledTask(() -> {
 				Minecraft.getMinecraft().world.getTileEntity(message.getPos()).readFromNBT(message.getTag());
-				System.out.println(((TileEntityOre) Minecraft.getMinecraft().world.getTileEntity(message.getPos())).getOreType());
 				Minecraft.getMinecraft().world.markBlockRangeForRenderUpdate(message.getPos(), message.getPos());
 			});
 		} else {

@@ -1,12 +1,12 @@
 package dev.anime.gems;
 
-import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import dev.anime.gems.proxies.ServerProxy;
 import dev.anime.gems.registries.MessageRegistry;
 import dev.anime.gems.registries.TileEntityRegistry;
+import dev.anime.gems.utils.LogHelper;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -16,7 +16,6 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
-import net.minecraftforge.fml.relauncher.Side;
 
 @Mod(modid = Main.MODID, version = Main.VERSION, name = Main.NAME)
 public class Main {
@@ -41,31 +40,31 @@ public class Main {
 	
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
-		LOGGER.log(Level.INFO, "Gem Utilities Pre-Initialization Start.");
+		LogHelper.inform("Gem Utilities Pre-Initialization Start.");
 		PROXY.preInit();
-		registerAllNonForgeRegistries(event.getSide());
-		LOGGER.log(Level.INFO, "Gem Utilities Pre-initialization End.");
+		registerAllNonForgeRegistries();
+		LogHelper.inform("Gem Utilities Pre-initialization End.");
 	}
 
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
-		LOGGER.log(Level.INFO, "Gem Utilities Initialization Start.");
-
-
+		LogHelper.inform("Gem Utilities Initialization Start.");
 		
-		LOGGER.log(Level.INFO, "Gem Utilities Initialization End.");
+		
+		
+		LogHelper.inform("Gem Utilities Initialization End.");
 	}
 	
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent event) {
-		LOGGER.log(Level.INFO, "Gem Utilities Post-Initialization Start.");
+		LogHelper.inform("Gem Utilities Post-Initialization Start.");
 		
 		
 		
-		LOGGER.log(Level.INFO, "Gem Utilities Post-Initialization End.");
+		LogHelper.inform("Gem Utilities Post-Initialization End.");
 	}
 	
-	private static final void registerAllNonForgeRegistries(Side side) {
+	private static final void registerAllNonForgeRegistries() {
 		MessageRegistry.registerAllMessages();
 		TileEntityRegistry.registerAllTileEntities();
 		NetworkRegistry.INSTANCE.registerGuiHandler(INSTANCE, HANDLER);

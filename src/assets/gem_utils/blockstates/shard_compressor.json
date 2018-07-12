@@ -1,23 +1,16 @@
 {
-	"forge_marker": 1,
-	
-	"defaults": {
-		"textures": { "particle": "minecraft:blocks/iron_block" },
-		"transform": "forge:default-block"
-	},
-	
-	"variants": {
-		"static": {
-			"true": {
-				"model": "gem_utils:shard_compressor_default"
-			},
-			"false": {
-				"model": "gem_utils:shard_compressor_piston"
-			}
-		},
-		"inventory": [{
-			"model": "gem_utils:shard_compressor_default"
-		}]
-	}
-
+  "forge_marker": 1,
+  "defaults": {
+    "transform": "forge:default-block"
+  },
+  "variants": {
+    "normal": [{}],
+    "inventory": [{ "model": "gem_utils:shard_compressor" }],
+    "static": {
+      "true": {
+		"model": "gem_utils:shard_compressor_default"
+      },
+      "false": { "model": "gem_utils:compressor" }
+    }
+  }
 }
