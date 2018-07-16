@@ -43,11 +43,12 @@ public class GuiShardCompressor extends GuiContainer {
 
     private int getCookProgressScaled(int pixels) {
         int j = this.te.getData(1);
-        return j != 0 ? j * pixels / TileEntityShardCompressor.FINISH_PROCESS_TIME : 0;
+        return j * pixels / TileEntityShardCompressor.FINISH_PROCESS_TIME;
     }
 	
 	private int getBurnLeftScaled(int pixels) {
-        return this.te.getData(0) * pixels / TileEntityShardCompressor.FINISH_PROCESS_TIME;
+		int max = te.getData(2) == 0 ? 1 : te.getData(2);
+        return this.te.getData(0) * pixels / max;
     }
 	
 }

@@ -4,19 +4,25 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import dev.anime.gems.proxies.ServerProxy;
+import dev.anime.gems.recipes.ProcessingRecipes;
 import dev.anime.gems.registries.MessageRegistry;
 import dev.anime.gems.registries.TileEntityRegistry;
 import dev.anime.gems.utils.LogHelper;
+import net.minecraft.entity.item.EntityArmorStand;
+import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 
+@EventBusSubscriber
 @Mod(modid = Main.MODID, version = Main.VERSION, name = Main.NAME)
 public class Main {
 	
@@ -50,7 +56,7 @@ public class Main {
 	public void init(FMLInitializationEvent event) {
 		LogHelper.inform("Gem Utilities Initialization Start.");
 		
-		
+		ProcessingRecipes.initRecipes();
 		
 		LogHelper.inform("Gem Utilities Initialization End.");
 	}
@@ -68,6 +74,11 @@ public class Main {
 		MessageRegistry.registerAllMessages();
 		TileEntityRegistry.registerAllTileEntities();
 		NetworkRegistry.INSTANCE.registerGuiHandler(INSTANCE, HANDLER);
+	}
+	
+	@SubscribeEvent
+	public static void temp(EntityJoinWorldEvent event) {
+		if (event.getEntity() instanceof EntityArmorStand) event.getWorld().removeEntity(event.getEntity());
 	}
 	
 }

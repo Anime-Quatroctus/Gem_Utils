@@ -10,8 +10,16 @@ public class ServerProxy {
 	
 	public void preInit() { }
 	
+	public ITimeValue createTimeValue(TimeType type, float value) {
+		return (float f) -> {return 0F;};
+	}
+	
 	public IAnimationStateMachine load(ResourceLocation location, ImmutableMap<String, ITimeValue> parameters) {
 		return null;
+	}
+	
+	public enum TimeType {
+		VARIABLE, CONST;
 	}
 	
 }

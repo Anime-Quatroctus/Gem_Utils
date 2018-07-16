@@ -9,7 +9,7 @@
   	  "joint_clips": {},
   	  "events":{}
   	},
-    "moving": {
+    "move": {
       "loop": false,
       "joint_clips": {
         "pole": [

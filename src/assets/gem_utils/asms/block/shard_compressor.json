@@ -4,14 +4,14 @@
   },
   "clips": {
   	"default": "gem_utils:block/compressor@default",
-    "moving": ["apply", "gem_utils:block/compressor@moving", "#move" ]
+    "move": ["apply", "gem_utils:block/compressor@move", "#move" ]
   },
   "states": [
-    "default", "moving"
+    "default", "move"
   ],
   "transitions": {
-  	"default": "moving",
-  	"moving": "default"
+  	"default": "move",
+  	"move": "default"
   },
   "start_state": "default"
 }

@@ -1,26 +1,62 @@
 package dev.anime.gems.recipes;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
+import dev.anime.gems.init.ModItems;
+import dev.anime.gems.utils.ItemStackHelper;
 import dev.anime.gems.utils.LogHelper;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 
-public class ProcessingRecipesBase {
+public class ProcessingRecipes {
 	
-	// TODO: Finish implementation
+	public static final ProcessingRecipes COMPRESSOR_RECIPES = new ProcessingRecipes();
+	
+	private final List<ProcessingRecipe> RECIPES = new ArrayList<ProcessingRecipe>();
+	
+	public ProcessingRecipes addRecipe(ProcessingRecipe recipe) {
+		RECIPES.add(recipe);
+		return this;
+	}
+	
+	public ProcessingRecipe findRecipe(Object[] objs, boolean ordered, boolean ignoreLength) {
+		RecipePiece[] pieces = transformArray(objs);
+		for (ProcessingRecipe recipe : RECIPES) if (recipe.matches(pieces, ordered, ignoreLength)) return recipe;
+		return null;
+	}
+	
+	public static RecipePiece[] transformArray(Object[] objs) {
+		RecipePiece[] pieces = new RecipePiece[objs.length];
+		for(int i = 0; i < objs.length; i++) pieces[i] = new RecipePiece(objs[i]);
+		return pieces;
+	}
+	
+	public static final void initRecipes() {
+		COMPRESSOR_RECIPES.addRecipe(new ProcessingRecipe(true, true).addInput(new RecipePiece(new ItemStack(ModItems.MATERIALS, 4, 4))).addOutput(new RecipePiece(new ItemStack(ModItems.MATERIALS, 1, 6))));
+	}
+	
+	public static class MultiRecipeList<T extends RecipePiece> extends ArrayList<T> {
+		private static final long serialVersionUID = 1L;
+		
+	}
+	
 	public static class SingleRecipeList<T extends RecipePiece> implements List<T> {
 		
-		private T piece;
+		private T piece = null;
 		
 		@Override
 		public boolean add(T arg0) {
-			if (piece != null) return false;
+			if (piece != null) {
+				LogHelper.inform("Attempted to add multiple objects to a SingleRecipeList, this may be a problem. Ignoring.");
+				return false;
+			}
 			piece = arg0;
 			return true;
 		}
@@ -178,12 +214,11 @@ public class ProcessingRecipesBase {
 			} else return false;
 		}
 
-		
-		// TODO: Finish implementation
 		@Override
 		public T remove(int arg0) {
-			
-			return null;
+			T temp = piece;
+			if (arg0 == 0) piece = null;
+			return temp;
 		}
 
 		@Override
@@ -198,34 +233,37 @@ public class ProcessingRecipesBase {
 
 		@Override
 		public T set(int arg0, T arg1) {
-			return null;
+			if (arg0 == 0) piece = arg1;
+			return piece;
 		}
 
 		@Override
 		public int size() {
-			return 0;
+			return 1;
 		}
 
 		@Override
 		public List<T> subList(int arg0, int arg1) {
-			return null;
+			return (arg0 == 0) ? this : new ArrayList<T>();
 		}
 
 		@Override
 		public Object[] toArray() {
-			return null;
+			return new Object[] { piece };
 		}
 
 		@Override
+		@SuppressWarnings({ "unchecked", "hiding" })
 		public <T> T[] toArray(T[] arg0) {
-			return null;
+			Object array = Array.newInstance(piece.getClass(), 1);
+			return array instanceof Object[] ? (T[]) array : null;
 		}
 		
 	}
 	
 	public static class RecipePiece {
 		
-		private ItemStack stack;
+		private ItemStack stack = ItemStack.EMPTY;
 		private Item item;
 		private Block block;
 		
@@ -235,10 +273,8 @@ public class ProcessingRecipesBase {
 
 		private RecipeType type;
 		
-		public RecipePiece() { }
-		
 		public RecipePiece(ItemStack stack) {
-			this.stack = stack;
+			this.setStack(stack);
 		}
 		
 		public RecipePiece(Item item) {
@@ -254,7 +290,33 @@ public class ProcessingRecipesBase {
 		}
 		
 		public RecipePiece(Object obj) {
-			this.setObj(obj);
+			if (obj instanceof Item) setItem((Item) obj);
+			else if (obj instanceof Block) setBlock((Block) obj);
+			else if (obj instanceof ItemStack) setStack((ItemStack) obj);
+			else if (obj instanceof IForgeRegistryEntry) setEntry((IForgeRegistryEntry<?>) obj);
+			else setObj(obj);
+		}
+		
+		public Object get() {
+			switch (type) {
+			case BLOCK: return getBlock();
+			case ITEM: return getItem();
+			case OTHER: return getObj();
+			case REGISTRY: return getEntry();
+			case STACK: return getStack();
+			default: return null;
+			}
+		}
+		
+		public ItemStack getAsStack() {
+			switch (type) {
+			case BLOCK: return new ItemStack(block);
+			case ITEM: return new ItemStack(item);
+			case OTHER: return ItemStack.EMPTY;
+			case REGISTRY: return entry instanceof Item ? new ItemStack((Item) entry) : entry instanceof Block ? new ItemStack((Block) entry) : ItemStack.EMPTY;
+			case STACK: return getStack();
+			default: return ItemStack.EMPTY;
+			}
 		}
 		
 		public ItemStack getStack() {
@@ -318,6 +380,17 @@ public class ProcessingRecipesBase {
 			this.block = null;
 			this.entry = null;
 			this.obj = null;
+		}
+		
+		@Override
+		public boolean equals(Object obj) {
+			if (!(obj instanceof RecipePiece)) return false;
+			RecipePiece piece = (RecipePiece) obj;
+			if (this.type == RecipeType.STACK && piece.type == RecipeType.STACK) {
+				ItemStack input = piece.getStack(), stack = getStack();
+				return ItemStackHelper.matches(stack, input.getItem(), input.getMetadata()) && input.getCount() >= stack.getCount();
+			}
+			return piece.get().equals(get());
 		}
 		
 		public enum RecipeType {
