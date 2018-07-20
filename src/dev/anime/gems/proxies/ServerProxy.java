@@ -2,13 +2,16 @@ package dev.anime.gems.proxies;
 
 import com.google.common.collect.ImmutableMap;
 
+import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.animation.ITimeValue;
 import net.minecraftforge.common.model.animation.IAnimationStateMachine;
 
 public class ServerProxy {
 	
-	public void preInit() { }
+	public void registerTESRs() { }
+	
+	public void registerModelVariants(Item item, ResourceLocation[] locations) { }
 	
 	public ITimeValue createTimeValue(TimeType type, float value) {
 		return (float f) -> {return 0F;};

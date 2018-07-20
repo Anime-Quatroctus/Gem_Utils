@@ -1,0 +1,99 @@
+{
+//TODO: Create the rest of the Tool files.
+	"tiers": {
+		"basic": {
+			"types": [ "ruby", "sapphire", "amethyst", "amber" ]
+		},
+		"demi": {
+			"types": [ "angelic", "shadowy" ]
+		},
+		"full": {
+			"types": [ "holy", "unholy" ]
+		},
+		"end": {
+			"types": [ "chaotic" ]
+		}
+	},
+	"progression": {
+		"basic": {
+			"ores": {
+				"all": {
+					"tool": "pickaxe",
+					"mining-level": "iron"
+				}
+			},
+			"tool-material": {
+				"harvest-level": 2,
+				"durability": 512,
+				"efficiency": 7.0,
+				"damage": 2.5,
+				"enchantability": 12
+			},
+			"armor-material": {
+				"durability-factor": 19,
+				"reduction-amounts": [ 2, 6, 6, 2 ],
+				"enchantability": 9,
+				"toughness": 1.0
+			},
+			"info": [
+				"Ruby used to craft power core.",
+				"Sappire used to craft power receiver.",
+				"Amethyst used to craft power tranceiver.",
+				"Amber used to craft Shard Compressor and Angelic Furnace",
+				"Power core, power receiver, and power transceiver require Gem Shatterer(8x) or Iron Hammer(4x)."
+			]
+		},
+		"demi": {
+			"ores": {
+				"all": {
+					"tool": "pickaxe",
+					"mining-level": "diamond"
+				}
+			},
+			"tool-material": {
+				"harvest-level": 4,
+				"durability": 2048,
+				"efficiency": 10.0,
+				"damage": 5.0,
+				"enchantability": 18
+			},
+			"armor-material": {
+				"durability": 39,
+				"reduction-amounts": [ 3, 6, 8, 3 ],
+				"enchantability": 16,
+				"toughness": 4
+			},
+			"info": [
+				"Shard compressor compresses Shadowy Shards(4x) into Shadowy Gems(1x).",
+				"Angelic Furnace smelts Angel Ore(1x) into Angel Ingots(1x).",
+				"Holy Ritual blocks are made from Angel Ingots. Demonic Rituals are made from Shadowy Gems."
+			]
+		},
+		"full": {
+			"all": {
+					"tool": "pickaxe",
+					"mining-level": "demi"
+				}
+			},
+			"tool-material": {
+				"harvest-level": 5,
+				"durability": 8192,
+				"efficiency": 14.0,
+				"damage": 8.0,
+				"enchantability": 25
+			},
+			"armor-material": {
+				"durability": 50,
+				"reduction-amounts": [ 3, 6, 8, 3 ],
+				"enchantability": 28,
+				"toughness": 8
+			},
+			"info": [
+				
+			]
+		},
+		"end": {
+			
+		}
+	}
+}

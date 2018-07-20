@@ -1,0 +1,5 @@
+{
+	"recipes": {
+		"tools_armor": "dev.anime.gems.recipes.ToolArmorRecipeFactory"
+	}
+}

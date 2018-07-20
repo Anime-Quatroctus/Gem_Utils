@@ -1,6 +1,6 @@
 {
 "textures": {
-    "particle": "#platform",
+    "particle": "blocks/iron_block",
     "platform": "blocks/piston_top_normal",
     "unsticky": "blocks/piston_top_normal",
     "side": "blocks/piston_side",

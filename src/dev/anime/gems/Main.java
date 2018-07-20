@@ -8,8 +8,7 @@ import dev.anime.gems.recipes.ProcessingRecipes;
 import dev.anime.gems.registries.MessageRegistry;
 import dev.anime.gems.registries.TileEntityRegistry;
 import dev.anime.gems.utils.LogHelper;
-import net.minecraft.entity.item.EntityArmorStand;
-import net.minecraftforge.event.entity.EntityJoinWorldEvent;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -18,7 +17,6 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 
@@ -47,7 +45,7 @@ public class Main {
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		LogHelper.inform("Gem Utilities Pre-Initialization Start.");
-		PROXY.preInit();
+		PROXY.registerTESRs();
 		registerAllNonForgeRegistries();
 		LogHelper.inform("Gem Utilities Pre-initialization End.");
 	}
@@ -76,9 +74,12 @@ public class Main {
 		NetworkRegistry.INSTANCE.registerGuiHandler(INSTANCE, HANDLER);
 	}
 	
-	@SubscribeEvent
-	public static void temp(EntityJoinWorldEvent event) {
-		if (event.getEntity() instanceof EntityArmorStand) event.getWorld().removeEntity(event.getEntity());
+	public static class AtlasSprite extends TextureAtlasSprite {
+
+		protected AtlasSprite(String spriteName) {
+			super(spriteName);
+		}
+		
 	}
 	
 }

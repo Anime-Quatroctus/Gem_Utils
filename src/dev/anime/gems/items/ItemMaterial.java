@@ -3,7 +3,7 @@ package dev.anime.gems.items;
 import dev.anime.gems.Main;
 import dev.anime.gems.blocks.BlockOres.OreType;
 import dev.anime.gems.init.ModItems;
-import dev.anime.gems.utils.IMetaModel;
+import dev.anime.gems.utils.ICustomModel;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -11,7 +11,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.client.model.ModelLoader;
 
-public class ItemMaterial extends Item implements IMetaModel {
+public class ItemMaterial extends Item implements ICustomModel {
 
 	private int extraMeta = 1;
 	private static final String[] EXTRA_MATERIALS = new String[] { "shadowy_gem" };

@@ -5,7 +5,7 @@ import java.util.Random;
 import dev.anime.gems.init.ModBlocks;
 import dev.anime.gems.init.ModItems;
 import dev.anime.gems.tile.TileEntityOre;
-import dev.anime.gems.utils.IMetaModel;
+import dev.anime.gems.utils.ICustomModel;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyEnum;
@@ -28,7 +28,7 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockOres extends Block implements IMetaModel {
+public class BlockOres extends Block implements ICustomModel {
 	
 	public static final PropertyEnum<OreType> ORE_TYPE = PropertyEnum.create("type", OreType.class);
 	

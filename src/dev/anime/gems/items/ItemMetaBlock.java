@@ -1,6 +1,6 @@
 package dev.anime.gems.items;
 
-import dev.anime.gems.utils.IMetaModel;
+import dev.anime.gems.utils.ICustomModel;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
@@ -20,7 +20,7 @@ public class ItemMetaBlock extends ItemBlock {
 	
 	@Override
 	public String getUnlocalizedName(ItemStack stack) {
-		return ((IMetaModel) block).getUnlocalizedName(stack);
+		return ((ICustomModel) block).getUnlocalizedName(stack);
 	}
 	
 }

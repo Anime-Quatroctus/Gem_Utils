@@ -3,6 +3,7 @@ package dev.anime.gems.blocks;
 import dev.anime.gems.Main;
 import dev.anime.gems.init.ModBlocks;
 import dev.anime.gems.tile.TileEntityShardCompressor;
+import dev.anime.gems.utils.ItemStackProperty;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -20,7 +21,7 @@ import net.minecraftforge.common.property.IUnlistedProperty;
 import net.minecraftforge.common.property.Properties;
 
 public class BlockShardCompressor extends Block {
-
+	
 	public BlockShardCompressor() {
 		super(Material.IRON);
 		setRegistryName("shard_compressor");
@@ -36,7 +37,7 @@ public class BlockShardCompressor extends Block {
 	
     @Override
     public ExtendedBlockState createBlockState() {
-        return new ExtendedBlockState(this, new IProperty[]{ Properties.StaticProperty }, new IUnlistedProperty[]{ Properties.AnimationProperty });
+        return new ExtendedBlockState(this, new IProperty[]{ Properties.StaticProperty }, new IUnlistedProperty[]{ Properties.AnimationProperty, ItemStackProperty.ITEMSTACK });
     }
 
     @Override

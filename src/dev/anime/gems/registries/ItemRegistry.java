@@ -7,7 +7,7 @@ import dev.anime.gems.init.ModBlocks;
 import dev.anime.gems.init.ModItems;
 import dev.anime.gems.items.ItemMetaBlock;
 import dev.anime.gems.utils.DictionaryHelper;
-import dev.anime.gems.utils.IMetaModel;
+import dev.anime.gems.utils.ICustomModel;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
@@ -28,7 +28,7 @@ public class ItemRegistry {
 	}
 	
 	private static ItemBlock createProperItemBlock(Block block) {
-		if (block instanceof IMetaModel) return (ItemBlock)new ItemMetaBlock(block).setRegistryName(block.getRegistryName());
+		if (block instanceof ICustomModel && ((ICustomModel) block).getMaxMeta() > 0) return (ItemBlock)new ItemMetaBlock(block).setRegistryName(block.getRegistryName());
 		else return (ItemBlock) new ItemBlock(block).setRegistryName(block.getRegistryName());
 	}
 	

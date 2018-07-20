@@ -13,8 +13,12 @@ public class ModBlocks {
 	
 	public static Block ORES;
 	
+	public static Block GEM_SHATTERER;
 	public static Block SHARD_COMPRESSOR;
 	public static Block ANGELIC_SMELTER;
+	
+	public static Block HOLY_RITUAL;
+	public static Block UNHOLY_RITUAL;
 	
 	public static final void init() {
 		ORES = new BlockOres();

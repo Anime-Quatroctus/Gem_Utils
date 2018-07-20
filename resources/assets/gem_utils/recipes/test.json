@@ -1,0 +1,43 @@
+{
+	"type": "gem_utils:tools_armor",
+	"main": { "item": "gem_utils:materials", "data": 0 },
+	"handle": { "item": "minecraft:stick" },
+	"tools": {
+		"pickaxe": {
+			"item": "gem_utils:gem_pickaxe",
+			"nbt": {
+				"gem_type": "ruby"
+			}
+		},
+		"axe": { 
+			"item": "gem_utils:gem_axe",
+			"nbt": {
+				"gem_type": "ruby"
+			}
+		},
+		"hoe": { 
+			"item": "gem_utils:gem_hoe",
+			"nbt": {
+				"gem_type": "ruby"
+			}
+		},
+		"shovel": { 
+			"item": "gem_utils:gem_shovel",
+			"nbt": {
+				"gem_type": "ruby"
+			}
+		},
+		"sword": { 
+			"item": "gem_utils:gem_sword",
+			"nbt": {
+				"gem_type": "ruby"
+			}
+		}
+	},
+	"armor": {
+		"head": { "item": "minecraft:diamond_helmet" },
+		"legs": { "item": "minecraft:iron_leggings", "meta": 700 },
+		"boots": { "item": "minecraft:sugar", "amount": 16 },
+		"chest": { "item": "minecraft:diamond_block" }
+	}
+}

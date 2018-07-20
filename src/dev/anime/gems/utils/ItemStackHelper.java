@@ -4,9 +4,9 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
-public class ItemStackHelper {
+public final class ItemStackHelper {
 	
-	public static boolean matches(ItemStack stack, Item item) {
+	public static final boolean matches(ItemStack stack, Item item) {
 		return stack.getItem() == item;
 	}
 	
@@ -21,6 +21,12 @@ public class ItemStackHelper {
 	
 	public static boolean matches(ItemStack initial, ItemStack secondary) {
 		return matches(initial, secondary.getItem(), secondary.getMetadata(), secondary.getTagCompound()) && initial.areCapsCompatible(secondary);
+	}
+	
+	public static ItemStack createNBTItem(ItemStack stack, String type) {
+		if (stack.getTagCompound() == null) stack.setTagCompound(new NBTTagCompound());
+		stack.getTagCompound().setString("gem_type", type);
+		return stack;
 	}
 	
 }
